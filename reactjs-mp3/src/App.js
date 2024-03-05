@@ -1,5 +1,5 @@
 import { Home, Login, Public, Personal } from "./containers/public/";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
 import path from "./ultis/path";
