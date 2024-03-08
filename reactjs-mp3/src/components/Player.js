@@ -1,13 +1,107 @@
-import React from "react";
-import { UseSelector, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import * as apis from "../apis";
+import icons from "../ultis/icons";
+import { MdNextPlan, MdPreview } from "react-icons/md";
+import { BiPause } from "react-icons/bi";
+
+const {
+  FaHeart,
+  FaRegHeart,
+  BsThreeDots,
+  MdSkipNext,
+  MdSkipPrevious,
+  BsRepeat,
+  CiShuffle,
+  IoPlay,
+  FaPause,
+} = icons;
 
 const Player = () => {
-  const { curSongId } = useSelector((state) => state.music);
+  const audioEl = new Audio(
+    "https://a128-z3.zmdcdn.me/f68b011ff473e77dfaa12d0e836c580f?authen=exp=1710100932~acl=/f68b011ff473e77dfaa12d0e836c580f/*~hmac=687a0ae4c33f7117399acbcdcd9d76b7"
+  );
+
+  const { curSongId, isPlaying } = useSelector((state) => state.music);
+  const [songInfo, setSongInfo] = useState(null);
+  const [source, setSource] = useState(null);
+
+  console.log(audioEl);
+
+  useEffect(() => {
+    const fetchDetailSong = async () => {
+      const [res1, res2] = await Promise.all([
+        apis.getDetailSong(curSongId),
+        apis.getSong(curSongId),
+      ]);
+      if (res1.data.err === 0) {
+        setSongInfo(res1.data.data);
+      }
+      if (res2.data.err === 0) {
+        setSource(res2.data.data["128"]);
+      }
+    };
+
+    fetchDetailSong();
+  }, [curSongId]);
+
+  useEffect(() => {}, [curSongId]);
+
+  const handleTogglePlayMusic = () => {
+    // audioEl.play();
+  };
 
   return (
-    <div className="bg-main-400 px-5 h-full flex  ">
-      <div className="w-[30%] flex-auto border border-red-500">Detail Song</div>
-      <div className="w-[40%] flex-auto border border-red-500">Main</div>
+    <div className="bg-main-400 px-5 h-full flex   ">
+      <div className="w-[30%] flex-auto  flex gap-3 items-center">
+        <img
+          src={songInfo?.thumbnail}
+          alt="thumbnail"
+          className="w-16 h-16 object-cover rounded-md"
+        />
+
+        <div className="flex flex-col ">
+          <span className="font-semibold text-gray-700 text-sm">
+            {songInfo?.title}
+          </span>
+          <span className="text-xs text-gray-500 ">
+            {songInfo?.artistsNames}
+          </span>
+        </div>
+
+        <div className="flex gap-4 pl-2">
+          <span>
+            <FaRegHeart size={16} />
+          </span>
+          <span>
+            <BsThreeDots size={16} />
+          </span>
+        </div>
+      </div>
+      <div className="w-[40%] flex-auto border flex flex-col items-center justify-center gap-2 border-red-500 py-2">
+        <div className="flex gap-8 items-center justify-center">
+          <span className="cursor-pointer" title="Bật phát ngẫu nhiên">
+            <CiShuffle size={24} />
+          </span>
+          <span className="cursor-pointer">
+            <MdSkipPrevious size={24} />
+          </span>
+          <span
+            className="p-1 border border-gray-700 hover:text-main-500 rounded-full cursor-pointer"
+            onClick={handleTogglePlayMusic}
+          >
+            {isPlaying ? <FaPause size={30} /> : <IoPlay size={30} />}
+          </span>
+          <span className="cursor-pointer">
+            <MdSkipNext size={24} />
+          </span>
+          <span className="cursor-pointer" title="Bật phát lại tất cả">
+            <BsRepeat size={24} />
+          </span>
+        </div>
+
+        <div className="">progress bar</div>
+      </div>
       <div className="w-[30%] flex-auto border border-red-500">Volume</div>
     </div>
   );

@@ -4,7 +4,6 @@ import * as apis from "../../apis";
 export const getHome = () => async (dispatch) => {
   try {
     const response = await apis.getHome();
-    console.log(response.data);
 
     if (response?.data.err === 0) {
       //handle when success
