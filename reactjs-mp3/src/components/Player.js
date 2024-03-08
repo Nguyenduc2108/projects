@@ -18,9 +18,7 @@ const {
 } = icons;
 
 const Player = () => {
-  const audioEl = new Audio(
-    "https://a128-z3.zmdcdn.me/f68b011ff473e77dfaa12d0e836c580f?authen=exp=1710100932~acl=/f68b011ff473e77dfaa12d0e836c580f/*~hmac=687a0ae4c33f7117399acbcdcd9d76b7"
-  );
+  const audioEl = new Audio();
 
   const { curSongId, isPlaying } = useSelector((state) => state.music);
   const [songInfo, setSongInfo] = useState(null);
@@ -31,8 +29,8 @@ const Player = () => {
   useEffect(() => {
     const fetchDetailSong = async () => {
       const [res1, res2] = await Promise.all([
-        apis.getDetailSong(curSongId),
-        apis.getSong(curSongId),
+        apis.apiGetDetailSong(curSongId),
+        apis.apiGetSong(curSongId),
       ]);
       if (res1.data.err === 0) {
         setSongInfo(res1.data.data);

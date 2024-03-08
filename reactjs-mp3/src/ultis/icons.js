@@ -8,7 +8,7 @@ import { TbChartArcs } from "react-icons/tb";
 import { BiSolidChart } from "react-icons/bi";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { IoIosSearch } from "react-icons/io";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaItunesNote } from "react-icons/fa";
 import { BsThreeDots, BsRepeat } from "react-icons/bs";
 import { CiShuffle } from "react-icons/ci";
 import { IoPlay } from "react-icons/io5";
@@ -30,6 +30,7 @@ const icons = {
   CiShuffle,
   IoPlay,
   FaPause,
+  FaItunesNote,
 };
 
 export default icons;
