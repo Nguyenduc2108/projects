@@ -1,14 +1,25 @@
 import React, { memo } from "react";
 import icons from "../ultis/icons";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import * as actions from "../store/actions";
 
 const { FaItunesNote } = icons;
 
 const List = ({ songData }) => {
-  console.log(songData);
+  const dispatch = useDispatch();
+
+  // console.log(songData);
 
   return (
-    <div className="flex justify-between items-center p-[10px]">
+    <div
+      className="flex justify-between items-center p-[10px] border-t border-[rgba(0,0,0,0.05)] hover:bg-[#dde4e4] cursor-pointer"
+      onClick={() => {
+        dispatch(actions.setCurSongId(songData?.encodeId));
+        dispatch(actions.play(true));
+        dispatch(actions.playAlbum(true));
+      }}
+    >
       <div className="flex items-center gap-3 flex-1">
         <span>
           <FaItunesNote />
@@ -30,7 +41,9 @@ const List = ({ songData }) => {
       </div>
 
       <div className="flex-1 flex items-center justify-center">
-        {songData?.album?.title}
+        {songData?.album?.title?.length > 30
+          ? `${songData?.album?.title?.slice(0, 30)}...`
+          : songData?.album?.title}
       </div>
 
       <div className="flex-1 flex justify-end">

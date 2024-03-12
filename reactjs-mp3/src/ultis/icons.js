@@ -13,6 +13,7 @@ import { BsThreeDots, BsRepeat } from "react-icons/bs";
 import { CiShuffle } from "react-icons/ci";
 import { IoPlay } from "react-icons/io5";
 import { FaPause } from "react-icons/fa6";
+import { LuDot } from "react-icons/lu";
 const icons = {
   MdOutlineLibraryMusic,
   TbChartArcs,
@@ -31,6 +32,7 @@ const icons = {
   IoPlay,
   FaPause,
   FaItunesNote,
+  LuDot,
 };
 
 export default icons;
