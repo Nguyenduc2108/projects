@@ -6,14 +6,21 @@ import {
 } from "react-icons/md";
 import { TbChartArcs } from "react-icons/tb";
 import { BiSolidChart } from "react-icons/bi";
-import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import {
+  FaArrowLeftLong,
+  FaArrowRightLong,
+  FaPause,
+  FaVolumeLow,
+  FaVolumeXmark,
+} from "react-icons/fa6";
 import { IoIosSearch } from "react-icons/io";
-import { FaHeart, FaRegHeart, FaItunesNote } from "react-icons/fa";
-import { BsThreeDots, BsRepeat } from "react-icons/bs";
+import { FaHeart, FaRegHeart, FaItunesNote, FaVolumeUp } from "react-icons/fa";
+import { BsThreeDots, BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { CiShuffle } from "react-icons/ci";
 import { IoPlay } from "react-icons/io5";
-import { FaPause } from "react-icons/fa6";
-import { LuDot } from "react-icons/lu";
+import { LuDot, LuListMusic } from "react-icons/lu";
+import { ImBin } from "react-icons/im";
+import { AiOutlineUserAdd } from "react-icons/ai";
 const icons = {
   MdOutlineLibraryMusic,
   TbChartArcs,
@@ -33,6 +40,13 @@ const icons = {
   FaPause,
   FaItunesNote,
   LuDot,
+  BsRepeat1,
+  LuListMusic,
+  FaVolumeUp,
+  FaVolumeLow,
+  FaVolumeXmark,
+  ImBin,
+  AiOutlineUserAdd,
 };
 
 export default icons;

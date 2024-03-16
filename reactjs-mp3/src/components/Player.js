@@ -7,6 +7,7 @@ import { BiPause } from "react-icons/bi";
 import * as actions from "../store/actions";
 import moment from "moment";
 import { toast } from "react-toastify";
+import { LoadingSong } from "./";
 
 const {
   FaHeart,
@@ -18,29 +19,40 @@ const {
   CiShuffle,
   IoPlay,
   FaPause,
+  BsRepeat1,
+  LuListMusic,
+  FaVolumeUp,
+  FaVolumeLow,
+  FaVolumeXmark,
 } = icons;
 
 var intervalId;
 
-const Player = () => {
+const Player = ({ setIsShowRightSidebar }) => {
   const { curSongId, isPlaying, songs } = useSelector((state) => state.music);
   const [songInfo, setSongInfo] = useState(null);
   const [audio, setAudio] = useState(new Audio());
   const [curSecond, setCurSecond] = useState(0);
   const [isShuffle, setIsShuffle] = useState(false);
+  const [repeatMode, setRepeatMode] = useState(0);
+  const [isLoadedSource, setIsLoadedSource] = useState(true);
+  const [volumn, setVolumn] = useState(100);
   const dispatch = useDispatch();
   const thumbRef = useRef();
   const trackRef = useRef();
 
   useEffect(() => {
     const fetchDetailSong = async () => {
+      setIsLoadedSource(false);
       const [res1, res2] = await Promise.all([
         apis.apiGetDetailSong(curSongId),
         apis.apiGetSong(curSongId),
       ]);
+      setIsLoadedSource(true);
       if (res1.data.err === 0) {
         setSongInfo(res1.data.data);
         setCurSecond(0);
+        dispatch(actions.setCurSongData(res1.data.data));
       }
       if (res2.data.err === 0) {
         audio.pause();
@@ -62,7 +74,7 @@ const Player = () => {
     intervalId && clearInterval(intervalId);
     audio.pause();
     audio.load();
-    if (isPlaying) {
+    if (isPlaying && thumbRef.current) {
       audio.play();
       intervalId = setInterval(() => {
         let percent =
@@ -72,6 +84,27 @@ const Player = () => {
       }, 200);
     }
   }, [audio]);
+
+  useEffect(() => {
+    const handleEnded = () => {
+      if (isShuffle) {
+        handleShuffle();
+      } else if (repeatMode) {
+        repeatMode === 1 ? handleRepeatOne() : handleNextSong();
+      } else {
+        audio.pause();
+        dispatch(actions.play(false));
+      }
+    };
+    audio.addEventListener("ended", handleEnded);
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [audio, isShuffle, repeatMode]);
+
+  useEffect(() => {
+    audio.volume = volumn / 100;
+  }, [volumn]);
 
   // play and pause music when clicked
   const handleTogglePlayMusic = async () => {
@@ -119,7 +152,15 @@ const Player = () => {
     }
   };
 
-  const handleShuffle = () => {};
+  const handleRepeatOne = () => {
+    audio.play();
+  };
+
+  const handleShuffle = () => {
+    const randomIndex = Math.round(Math.random() * songs?.length) - 1;
+    dispatch(actions.setCurSongId(songs[randomIndex].encodeId));
+    dispatch(actions.play(true));
+  };
 
   return (
     <div className="bg-main-400 px-5 h-full flex   ">
@@ -148,10 +189,12 @@ const Player = () => {
           </span>
         </div>
       </div>
-      <div className="w-[40%] flex-auto border flex flex-col items-center justify-center gap-2 border-red-500 py-2">
+      <div className="w-[40%] flex-auto  flex flex-col items-center justify-center gap-2 py-2">
         <div className="flex gap-8 items-center justify-center">
           <span
-            className={`cursor-pointer ${isShuffle && "text-purple-600"}`}
+            className={`cursor-pointer ${
+              isShuffle ? "text-purple-600" : "text-black"
+            }`}
             title="Bật phát ngẫu nhiên"
             onClick={() => setIsShuffle((prev) => !prev)}
           >
@@ -167,7 +210,13 @@ const Player = () => {
             className="p-1 border border-gray-700 hover:text-main-500 rounded-full cursor-pointer"
             onClick={handleTogglePlayMusic}
           >
-            {isPlaying ? <FaPause size={30} /> : <IoPlay size={30} />}
+            {!isLoadedSource ? (
+              <LoadingSong />
+            ) : isPlaying ? (
+              <FaPause size={30} />
+            ) : (
+              <IoPlay size={30} />
+            )}
           </span>
           <span
             onClick={handleNextSong}
@@ -175,8 +224,16 @@ const Player = () => {
           >
             <MdSkipNext size={24} />
           </span>
-          <span className="cursor-pointer" title="Bật phát lại tất cả">
-            <BsRepeat size={24} />
+          <span
+            className={`cursor-pointer ${repeatMode && "text-purple-600"}`}
+            title="Bật phát lại tất cả"
+            onClick={() => setRepeatMode((prev) => (prev === 2 ? 0 : prev + 1))}
+          >
+            {repeatMode === 1 ? (
+              <BsRepeat1 size={24} />
+            ) : (
+              <BsRepeat size={24} />
+            )}
           </span>
         </div>
 
@@ -199,7 +256,35 @@ const Player = () => {
           </span>
         </div>
       </div>
-      <div className="w-[30%] flex-auto border border-red-500">Volume</div>
+
+      <div className="w-[30%] flex-auto flex items-center justify-end gap-4 ">
+        <div className="flex gap-2 items-center cursor-pointer">
+          <span onClick={() => setVolumn((prev) => (+prev === 0 ? 70 : 0))}>
+            {+volumn >= 50 ? (
+              <FaVolumeUp />
+            ) : +volumn === 0 ? (
+              <FaVolumeXmark />
+            ) : (
+              <FaVolumeLow />
+            )}
+          </span>
+          <input
+            type="range"
+            step={1}
+            min={0}
+            max={100}
+            value={volumn}
+            onChange={(e) => setVolumn(e.target.value)}
+          />
+        </div>
+
+        <span
+          onClick={() => setIsShowRightSidebar((prev) => !prev)}
+          className="p-1 rounded-sm cursor-pointer bg-main-500 opacity-90 hover:opacity-100"
+        >
+          <LuListMusic size={20} />
+        </span>
+      </div>
     </div>
   );
 };

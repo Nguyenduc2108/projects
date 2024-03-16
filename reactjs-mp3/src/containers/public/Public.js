@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Player, SidebarLeft, SidebarRight, Header } from "../../components";
+import {
+  Player,
+  SidebarLeft,
+  SidebarRight,
+  Header,
+  Loading,
+} from "../../components";
+import { Scrollbars } from "react-custom-scrollbars-2";
+import { useSelector } from "react-redux";
 
 const Public = () => {
+  const [isShowRightSidebar, setIsShowRightSidebar] = useState(true);
+  const { isLoading } = useSelector((state) => state.app);
+
   return (
     <div className="w-full relative h-screen flex flex-col bg-main-300">
       <div className="w-full h-full flex flex-auto ">
@@ -10,20 +21,33 @@ const Public = () => {
           <SidebarLeft />
         </div>
 
-        <div className="flex-auto border border-red-500 ">
-          <div className="h-[70px]  px-[59px] flex items-center mb-5">
+        <div className="flex-auto relative flex flex-col border border-red-500 ">
+          {isLoading && (
+            <div className="absolute top-0 right-0 bottom-0 left-0 bg-main-200 z-20 flex justify-center items-center">
+              <Loading />
+            </div>
+          )}
+
+          <div className="h-[70px] flex-none  px-[59px] flex items-center ">
             <Header />
           </div>
-          <Outlet />
+
+          <div className="flex-auto w-full ">
+            <Scrollbars autoHide style={{ width: "100%", height: "80%" }}>
+              <Outlet />
+            </Scrollbars>
+          </div>
         </div>
 
-        <div className="w-[329px] hidden 1600:flex flex-none border border-green-500 animate-slide-left">
-          <SidebarRight />
-        </div>
+        {isShowRightSidebar && (
+          <div className="w-[329px] h-screen hidden 1600:flex flex-none animate-slide-left">
+            <SidebarRight />
+          </div>
+        )}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-10 h-[90px]">
-        <Player />
+      <div className="fixed bottom-0 left-0 right-0 z-50 h-[90px]">
+        <Player setIsShowRightSidebar={setIsShowRightSidebar} />
       </div>
     </div>
   );

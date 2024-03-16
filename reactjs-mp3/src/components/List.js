@@ -6,7 +6,7 @@ import * as actions from "../store/actions";
 
 const { FaItunesNote } = icons;
 
-const List = ({ songData }) => {
+const List = ({ songData, isHideAlbum }) => {
   const dispatch = useDispatch();
 
   // console.log(songData);
@@ -18,12 +18,22 @@ const List = ({ songData }) => {
         dispatch(actions.setCurSongId(songData?.encodeId));
         dispatch(actions.play(true));
         dispatch(actions.playAlbum(true));
+        dispatch(
+          actions.setRencent({
+            thumbnail: songData?.thumbnail,
+            title: songData?.title,
+            sid: songData?.sid,
+            artists: songData?.artistsNames,
+          })
+        );
       }}
     >
       <div className="flex items-center gap-3 flex-1">
-        <span>
-          <FaItunesNote />
-        </span>
+        {!isHideAlbum && (
+          <span>
+            <FaItunesNote />
+          </span>
+        )}
         <img
           src={songData?.thumbnail}
           alt="thumbnail"
@@ -36,17 +46,19 @@ const List = ({ songData }) => {
               ? `${songData?.title?.slice(0, 30)}...`
               : songData?.title}
           </span>
-          <span>{songData?.artistsNames}</span>
+          <span className="text-xs opacity-70 ">{songData?.artistsNames}</span>
         </span>
       </div>
 
-      <div className="flex-1 flex items-center justify-center">
-        {songData?.album?.title?.length > 30
-          ? `${songData?.album?.title?.slice(0, 30)}...`
-          : songData?.album?.title}
-      </div>
+      {!isHideAlbum && (
+        <div className="flex-1 flex items-center justify-center">
+          {songData?.album?.title?.length > 30
+            ? `${songData?.album?.title?.slice(0, 30)}...`
+            : songData?.album?.title}
+        </div>
+      )}
 
-      <div className="flex-1 flex justify-end">
+      <div className="flex-1 flex justify-end text-xs opacity-70">
         {moment.utc(songData?.duration * 1000).format("mm:ss")}
       </div>
     </div>

@@ -21,6 +21,42 @@ export const setPlaylist = (songs) => ({
   songs,
 });
 
+export const loading = (flag) => ({
+  type: actionTypes.LOADING,
+  flag,
+});
+
+export const setCurSongData = (data) => ({
+  type: actionTypes.SET_CUR_SONG_DATA,
+  data,
+});
+
+export const setCurAlbumId = (pid) => ({
+  type: actionTypes.SET_CUR_ALBUM_ID,
+  pid,
+});
+
+export const setRencent = (data) => ({
+  type: actionTypes.SET_RECENT,
+  data,
+});
+
+export const search = (keyword) => async (dispatch) => {
+  try {
+    const response = await apis.apiSearch(keyword);
+    if (response.data.err === 0) {
+      dispatch({ type: actionTypes.SEARCH, data: response.data.data });
+    } else {
+      dispatch({ type: actionTypes.SEARCH, data: null });
+    }
+  } catch (error) {
+    dispatch({
+      type: actionTypes.SEARCH,
+      data: null,
+    });
+  }
+};
+
 // export const fetchDetailPlayList = (pid) => async (dispatch) => {
 //   try {
 //     const response = await apis.apiGetDetailPlayList(pid);
