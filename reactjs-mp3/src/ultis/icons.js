@@ -13,7 +13,7 @@ import {
   FaVolumeLow,
   FaVolumeXmark,
 } from "react-icons/fa6";
-import { IoIosSearch } from "react-icons/io";
+import { IoIosSearch, IoMdClose } from "react-icons/io";
 import { FaHeart, FaRegHeart, FaItunesNote, FaVolumeUp } from "react-icons/fa";
 import { BsThreeDots, BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { CiShuffle } from "react-icons/ci";
@@ -47,6 +47,7 @@ const icons = {
   FaVolumeXmark,
   ImBin,
   AiOutlineUserAdd,
+  IoMdClose,
 };
 
 export default icons;

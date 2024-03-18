@@ -65,7 +65,7 @@ const SearchAll = () => {
                 index % 2 !== 0 ? "p;-4" : "pr-4"
               }`}
             >
-              <List songData={item} isHideAlbum />
+              <List songData={item} isHideAlbum isHideNode={true} />
             </div>
           ))}
         </div>
@@ -89,7 +89,7 @@ const SearchAll = () => {
       </div>
 
       <div className="flex flex-col w-full">
-        <h3 className="text-lg font-bold mb-5">Nghệ sĩ</h3>
+        <h3 className="text-lg font-bold mb-5 text-red-500">Nghệ sĩ</h3>
         <div className="flex gap-[28px]">
           {searchData?.artists
             ?.filter((i, index) => index <= 4)
@@ -99,6 +99,7 @@ const SearchAll = () => {
                 title={item.name}
                 image={item.thumbnailM}
                 follower={item.totalFollow}
+                link={item.link}
               />
             ))}
         </div>

@@ -66,11 +66,12 @@ const SidebarRight = () => {
               <div className="flex flex-auto flex-col">
                 {recentSongs?.map((item) => (
                   <SongItem
-                    key={item?.sid}
+                    key={item.sid}
                     thumbnail={item?.thumbnail}
                     title={item?.title}
                     artists={item?.artists}
                     sid={item?.sid}
+                    size="w-[40px] h-[40px]"
                   />
                 ))}
               </div>
@@ -85,6 +86,7 @@ const SidebarRight = () => {
               title={curSongData?.title}
               artists={curSongData?.artistsNames}
               sid={curSongData?.encodeId}
+              size="w-[40px] h-[40px]"
               style="bg-main-500 text-white"
             />
             <div className="flex flex-col  text-black pt-[15px] px-2 pb-[5px]">

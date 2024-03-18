@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import {
   Player,
   SidebarLeft,
@@ -8,33 +8,52 @@ import {
   Loading,
 } from "../../components";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as actions from "../../store/actions";
 
 const Public = () => {
   const [isShowRightSidebar, setIsShowRightSidebar] = useState(true);
-  const { isLoading } = useSelector((state) => state.app);
+  const { isLoading, scrollTop } = useSelector((state) => state.app);
+  const dispatch = useDispatch();
+
+  const handleScrollTop = (e) => {
+    if (e.target.scrollTop === 0) {
+      dispatch(actions.zeroscrollTop(true));
+    } else {
+      dispatch(actions.zeroscrollTop(false));
+    }
+  };
 
   return (
     <div className="w-full relative h-screen flex flex-col bg-main-300">
       <div className="w-full h-full flex flex-auto ">
-        <div className="w-[240px] h-full flex-none border border-blue-500">
+        <div className="w-[240px] h-full flex-none ">
           <SidebarLeft />
         </div>
 
-        <div className="flex-auto relative flex flex-col border border-red-500 ">
+        <div className="flex-auto relative flex flex-col ">
           {isLoading && (
             <div className="absolute top-0 right-0 bottom-0 left-0 bg-main-200 z-20 flex justify-center items-center">
               <Loading />
             </div>
           )}
 
-          <div className="h-[70px] flex-none  px-[59px] flex items-center ">
+          <div
+            className={`h-[70px] ${
+              scrollTop ? "bg-transparent" : "bg-main-300"
+            }  fixed top-0 left-[240px] right-[329px] z-50 px-[59px] flex items-center`}
+          >
             <Header />
           </div>
 
           <div className="flex-auto w-full ">
-            <Scrollbars autoHide style={{ width: "100%", height: "80%" }}>
+            <Scrollbars
+              onScroll={handleScrollTop}
+              autoHide
+              style={{ width: "100%", height: "80%" }}
+            >
               <Outlet />
+              <div className="h-[120px] w-full"></div>
             </Scrollbars>
           </div>
         </div>

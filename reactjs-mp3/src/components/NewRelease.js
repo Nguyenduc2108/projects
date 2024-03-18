@@ -24,8 +24,8 @@ const NewRelease = () => {
         <button
           onClick={() => setIsActived(0)}
           type="button"
-          className={`py-1 px-4 rounded-l-full rounded-r-full border border-gray-400 bg-transparent ${
-            isActived === 0 && "bg-emerald-700 text-white"
+          className={`py-1 px-4 rounded-l-full rounded-r-full border border-gray-400 ${
+            isActived === 0 ? "bg-main-500 text-white" : ""
           }`}
         >
           QUỐC TẾ
@@ -33,14 +33,14 @@ const NewRelease = () => {
         <button
           onClick={() => setIsActived(1)}
           type="button"
-          className={`py-1 px-4 rounded-l-full rounded-r-full border border-gray-400 bg-transparent ${
-            isActived === 1 && "bg-emerald-700 text-white"
+          className={`py-1 px-4 rounded-l-full rounded-r-full border border-gray-400 ${
+            isActived === 1 ? "bg-main-500 text-white" : ""
           }`}
         >
           VIỆT NAM
         </button>
       </div>
-      <div className="flex flex-wrap w-full  ">
+      <div className="flex flex-wrap w-full justify-between  ">
         {songs?.map((item) => (
           <div key={item.encodeId} className="w-[45%] min-[1024px]:w-[30%]">
             <SongItem
