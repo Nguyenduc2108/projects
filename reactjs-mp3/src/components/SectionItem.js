@@ -34,7 +34,7 @@ const SectionItem = ({
       onClick={() => {
         navigate(link?.split(".")[0], { state: { playAlbum: false } });
       }}
-      className="flex flex-col gap-3 justify-evenly w-1/5 p-4 text-sm cursor-pointer "
+      className="flex flex-col gap-3 w-1/4 justify-evenly p-4 text-sm cursor-pointer "
     >
       <div
         onMouseLeave={handleLeave}
@@ -42,7 +42,7 @@ const SectionItem = ({
         className="w-full relative overflow-hidden rounded-lg"
       >
         {isHover && (
-          <div className="absolute top-0 bottom-0 left-0 right-0 z-20   bg-overlay-30 rounded-lg text-white flex items-center justify-center gap-3">
+          <div className="absolute top-0 bottom-0 left-0 right-0 z-20 bg-overlay-30 rounded-lg text-white flex items-center justify-center gap-3">
             <span>
               <FaRegHeart size={24} />
             </span>
@@ -67,7 +67,7 @@ const SectionItem = ({
           className="w-full h-auto rounded-lg  "
         />
       </div>
-      <span className="flex flex-col">
+      <span className="flex flex-col flex-wrap w-full">
         <span className="font-semibold ">
           {title?.length > 30 ? title.slice(0, 30) + "..." : title}
         </span>

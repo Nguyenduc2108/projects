@@ -14,6 +14,7 @@ import * as actions from "../../store/actions";
 const Public = () => {
   const [isShowRightSidebar, setIsShowRightSidebar] = useState(true);
   const { isLoading, scrollTop } = useSelector((state) => state.app);
+  const { curSongId } = useSelector((state) => state.music);
   const dispatch = useDispatch();
 
   const handleScrollTop = (e) => {
@@ -27,7 +28,7 @@ const Public = () => {
   return (
     <div className="w-full relative h-screen flex flex-col bg-main-300">
       <div className="w-full h-full flex flex-auto ">
-        <div className="w-[240px] h-full flex-none ">
+        <div className="min-[1024px]:w-[240px]  w-[70px] h-full flex-none ">
           <SidebarLeft />
         </div>
 
@@ -41,7 +42,9 @@ const Public = () => {
           <div
             className={`h-[70px] ${
               scrollTop ? "bg-transparent" : "bg-main-300"
-            }  fixed top-0 left-[240px] right-[329px] z-50 px-[59px] flex items-center`}
+            }  fixed top-0 min-[1024px]:left-[240px] left-[70px] ${
+              isShowRightSidebar ? "1400:right-[329px] right-0" : "right-0"
+            } z-50 px-[59px] flex items-center`}
           >
             <Header />
           </div>
@@ -59,15 +62,17 @@ const Public = () => {
         </div>
 
         {isShowRightSidebar && (
-          <div className="w-[329px] h-screen hidden 1600:flex flex-none animate-slide-left">
+          <div className="w-[329px] h-screen hidden 1400:flex flex-none animate-slide-left">
             <SidebarRight />
           </div>
         )}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-50 h-[90px]">
-        <Player setIsShowRightSidebar={setIsShowRightSidebar} />
-      </div>
+      {curSongId && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 h-[90px]">
+          <Player setIsShowRightSidebar={setIsShowRightSidebar} />
+        </div>
+      )}
     </div>
   );
 };

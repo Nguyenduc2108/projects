@@ -33,3 +33,17 @@
 .slick-prev::before {
   font-size: 38px !important;
 }
+
+@media (min-width: 1024px) {
+  .logo-icon {
+    display: none;
+  }
+
+  .logo-group {
+    padding: 15px 25px;
+  }
+
+  .logo-pc {
+    display: block;
+  }
+}

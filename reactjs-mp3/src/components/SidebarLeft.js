@@ -19,9 +19,14 @@ const SidebarLeft = () => {
         onClick={() => {
           navigate(path.HOME);
         }}
-        className="w-full h-[70px] py-[15px] px-[25px] flex justify-start items-center cursor-pointer"
+        className="logo-group w-full h-[70px] flex justify-start items-center cursor-pointer"
       >
-        <img src={logo} alt="logo" className="w-[120px] h-10 " />
+        <img src={logo} alt="logo" className="logo-pc w-[120px] h-10 hidden" />
+        <img
+          src="https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.10.6/static/media/icon_zing_mp3_60.f6b51045.svg"
+          alt="logo"
+          className="logo-icon w-[95px] h-[45px]"
+        />
       </div>
 
       <div className="flex flex-col">
@@ -35,7 +40,7 @@ const SidebarLeft = () => {
             }
           >
             {item.icons}
-            <span>{item.text}</span>
+            <span className="min-[1024px]:inline hidden">{item.text}</span>
           </NavLink>
         ))}
       </div>

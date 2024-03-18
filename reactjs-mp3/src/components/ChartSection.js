@@ -117,11 +117,11 @@ const ChartSection = () => {
   }, [chart]);
 
   return (
-    <div className="px-[59px] mt-12 relative max-h-[480px] rounded-md ">
+    <div className="px-[59px] mt-12 relative min-[1324px]:max-h-[650px] h-[950px] rounded-md ">
       <img
         src={bgChart}
         alt="bg-Chart"
-        className="w-full object-cover rounded-md max-h-[480px] "
+        className="w-full object-cover rounded-md min-[1324px]:max-h-[650px] h-[950px] "
       />
       <div className="absolute top-0 left-[59px] right-[59px] bottom-0 z-10 bg-[rgba(77,34,104,0.9)] rounded-md"></div>
       <div className="absolute top-0 left-[59px] right-[59px] bottom-0 z-20 p-5  flex flex-col gap-8 rounded-md ">
@@ -135,7 +135,7 @@ const ChartSection = () => {
           </span>
         </Link>
 
-        <div className="flex gap-4 h-full">
+        <div className="min-[1324px]:flex-row flex flex-col gap-4 h-full">
           <div className="flex-4 flex flex-col gap-4 ">
             {rank
               ?.filter((i, index) => index < 3)
@@ -159,7 +159,7 @@ const ChartSection = () => {
               Xem thêm
             </Link>
           </div>
-          <div className="flex-6 h-[90%] relative  ">
+          <div className="flex-6 order-first min-[1324px]:order-last min-[1324px]:w-[500px] h-[90%] relative  ">
             {data && <Line data={data} ref={chartRef} options={options} />}
             <div
               className="tooltip"

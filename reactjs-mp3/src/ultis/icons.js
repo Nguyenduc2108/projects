@@ -3,6 +3,7 @@ import {
   MdOutlineFeed,
   MdSkipNext,
   MdSkipPrevious,
+  MdOutlineNavigateNext,
 } from "react-icons/md";
 import { TbChartArcs } from "react-icons/tb";
 import { BiSolidChart } from "react-icons/bi";
@@ -17,10 +18,11 @@ import { IoIosSearch, IoMdClose } from "react-icons/io";
 import { FaHeart, FaRegHeart, FaItunesNote, FaVolumeUp } from "react-icons/fa";
 import { BsThreeDots, BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { CiShuffle } from "react-icons/ci";
-import { IoPlay } from "react-icons/io5";
+import { IoPlay, IoChevronBackSharp } from "react-icons/io5";
 import { LuDot, LuListMusic } from "react-icons/lu";
 import { ImBin } from "react-icons/im";
 import { AiOutlineUserAdd } from "react-icons/ai";
+
 const icons = {
   MdOutlineLibraryMusic,
   TbChartArcs,
@@ -48,6 +50,8 @@ const icons = {
   ImBin,
   AiOutlineUserAdd,
   IoMdClose,
+  IoChevronBackSharp,
+  MdOutlineNavigateNext,
 };
 
 export default icons;

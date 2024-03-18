@@ -12,7 +12,7 @@ const Search = () => {
   const { keyword } = useSelector((state) => state.music);
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-[90px]">
       <div className="flex h-[50px] mb-7 items-center text-sm border-b border-gray-400 pl-[60px] pb-1">
         <span className="text-[24px] font-bold pr-6 border-r border-gray-400">
           Kết quả tìm kiếm
@@ -34,7 +34,6 @@ const Search = () => {
       <div className="w-full">
         <Outlet />
       </div>
-      <div className="w-full h-[120px]"></div>
     </div>
   );
 };

@@ -36,10 +36,12 @@ const Player = ({ setIsShowRightSidebar }) => {
   const [isShuffle, setIsShuffle] = useState(false);
   const [repeatMode, setRepeatMode] = useState(0);
   const [isLoadedSource, setIsLoadedSource] = useState(true);
-  const [volumn, setVolumn] = useState(100);
+  const [volume, setVolume] = useState(100);
+  const [isHoverVolume, setIsHoverVolume] = useState(false);
   const dispatch = useDispatch();
   const thumbRef = useRef();
   const trackRef = useRef();
+  const volumeRef = useRef();
 
   useEffect(() => {
     const fetchDetailSong = async () => {
@@ -103,8 +105,14 @@ const Player = ({ setIsShowRightSidebar }) => {
   }, [audio, isShuffle, repeatMode]);
 
   useEffect(() => {
-    audio.volume = volumn / 100;
-  }, [volumn]);
+    audio.volume = volume / 100;
+  }, [volume]);
+
+  useEffect(() => {
+    if (volumeRef.current) {
+      volumeRef.current.style.cssText = `right: ${100 - volume}%`;
+    }
+  }, [volume]);
 
   // play and pause music when clicked
   const handleTogglePlayMusic = async () => {
@@ -257,24 +265,43 @@ const Player = ({ setIsShowRightSidebar }) => {
         </div>
       </div>
 
-      <div className="w-[30%] flex-auto flex items-center justify-end gap-4 ">
-        <div className="flex gap-2 items-center cursor-pointer">
-          <span onClick={() => setVolumn((prev) => (+prev === 0 ? 70 : 0))}>
-            {+volumn >= 50 ? (
+      <div className="w-[30%] hidden flex-auto min-[840px]:flex items-center justify-end gap-4 ">
+        <div
+          className="flex gap-2 items-center cursor-pointer"
+          onMouseEnter={() => setIsHoverVolume(true)}
+          onMouseLeave={() => setIsHoverVolume(false)}
+        >
+          <span onClick={() => setVolume((prev) => (+prev === 0 ? 70 : 0))}>
+            {+volume >= 50 ? (
               <FaVolumeUp />
-            ) : +volumn === 0 ? (
+            ) : +volume === 0 ? (
               <FaVolumeXmark />
             ) : (
               <FaVolumeLow />
             )}
           </span>
+
+          <div
+            className={`w-[130px] h-1 bg-white rounded-l-full rounded-r-full ${
+              isHoverVolume ? "hidden" : "relative"
+            }`}
+          >
+            <div
+              ref={volumeRef}
+              className="absolute left-0 bottom-0 top-0 bg-main-500 rounded-l-full rounded-r-full"
+            ></div>
+          </div>
+
           <input
             type="range"
             step={1}
             min={0}
             max={100}
-            value={volumn}
-            onChange={(e) => setVolumn(e.target.value)}
+            value={volume}
+            onChange={(e) => setVolume(e.target.value)}
+            className={`w-[130px] cursor-pointer ${
+              isHoverVolume ? "inline" : "hidden"
+            }`}
           />
         </div>
 
