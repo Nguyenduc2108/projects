@@ -11,6 +11,8 @@ import {
   SearchAll,
   Singer,
   SearchPlaylist,
+  NewChart,
+  Register,
 } from "./containers/public/";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -61,7 +63,9 @@ function App() {
           <Route path={path.PUBLIC} element={<Public />}>
             <Route path={path.HOME} element={<Home />} />
             <Route path={path.LOGIN} element={<Login />} />
+            <Route path={path.REGISTER} element={<Register />} />
             <Route path={path.MY_MUSIC} element={<Personal />} />
+            <Route path={path.NEW_CHART} element={<NewChart />} />
             <Route path={path.ALBUM__TITLE__PID} element={<Album />} />
             <Route path={path.PLAYLIST__TITLE__PID} element={<Album />} />
             <Route

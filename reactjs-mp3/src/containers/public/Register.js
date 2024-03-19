@@ -2,17 +2,17 @@ import React from "react";
 import facebook from "../../assets/images/facebook.png";
 import google from "../../assets/images/google.png";
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="flex flex-col gap-8 items-center justify-center mt-[90px]">
-      <h1 className="text-[40px] font-semibold">Đăng nhập</h1>
+      <h1 className="text-[40px] font-semibold">Đăng ký</h1>
       <div>
         <form
           action=""
           className="w-[400px] max-w-[100%] bg-white rounded-md p-4"
         >
           <h2 className="text-main-500 text-[24px] text-center mb-4">
-            Đăng nhập
+            Đăng ký
           </h2>
           <input
             type="text"
@@ -24,15 +24,19 @@ const Login = () => {
             placeholder="Mật khẩu"
             className="w-full p-3 border border-gray-500 mb-8"
           />
+          <input
+            type="password"
+            placeholder="Nhập lại mật khẩu"
+            className="w-full p-3 border border-gray-500 mb-8"
+          />
 
           <button
             type="button"
             className="w-full p-3 mb-4 bg-main-500 hover:opacity-90 text-white rounded-sm"
           >
-            ĐĂNG NHẬP
+            ĐĂNG KÝ
           </button>
           <div className="flex justify-between text-sm text-blue-400">
-            <span className="">Quên mật khẩu</span>
             <span>Đăng nhập với SMS</span>
           </div>
 
@@ -58,9 +62,9 @@ const Login = () => {
           </div>
 
           <p className="mt-4 text-gray-400 text-center">
-            Bạn mới biết đến Zingmp3-Clone?{" "}
+            Bạn đã có tài khoản Zingmp3-Clone?
             <span type="button" className="text-main-500">
-              Đăng ký
+              Đăng nhập
             </span>
           </p>
         </form>
@@ -69,4 +73,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

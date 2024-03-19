@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { NavLink, useSearchParams } from "react-router-dom";
 import { searchMenu } from "../../ultis/menu";
 import { useSelector } from "react-redux";
+import { Loading } from "../../components";
 
 const notActiveStyle = "px-4 hover:text-main-500 font-semibold cursor-pointer";
 const activeStyle =
@@ -12,29 +13,35 @@ const Search = () => {
   const { keyword } = useSelector((state) => state.music);
 
   return (
-    <div className="w-full mt-[90px]">
-      <div className="flex h-[50px] mb-7 items-center text-sm border-b border-gray-400 pl-[60px] pb-1">
-        <span className="text-[24px] font-bold pr-6 border-r border-gray-400">
-          Kết quả tìm kiếm
-        </span>
-        <div className="flex items-center">
-          {searchMenu?.map((item) => (
-            <NavLink
-              key={item.path}
-              to={`${item.path}?q${keyword.replace(" ", "+")}`}
-              className={({ isActive }) =>
-                isActive ? activeStyle : notActiveStyle
-              }
-            >
-              {item.text}
-            </NavLink>
-          ))}
+    <>
+      {keyword ? (
+        <div className="w-full mt-[90px]">
+          <div className="flex h-[50px] mb-7 items-center text-sm border-b border-gray-400 pl-[60px] pb-1">
+            <span className="text-[24px] font-bold pr-6 border-r border-gray-400">
+              Kết quả tìm kiếm
+            </span>
+            <div className="flex items-center">
+              {searchMenu?.map((item) => (
+                <NavLink
+                  key={item.path}
+                  to={`${item.path}?q${keyword.replace(" ", "+")}`}
+                  className={({ isActive }) =>
+                    isActive ? activeStyle : notActiveStyle
+                  }
+                >
+                  {item.text}
+                </NavLink>
+              ))}
+            </div>
+          </div>
+          <div className="w-full">
+            <Outlet />
+          </div>
         </div>
-      </div>
-      <div className="w-full">
-        <Outlet />
-      </div>
-    </div>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };
 

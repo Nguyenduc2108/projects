@@ -3,7 +3,7 @@ import { apiGetChartHome } from "../../apis";
 import bgChart from "../../assets/images/anh-chill-la-gi.jpg";
 import { Line } from "react-chartjs-2";
 import { Chart } from "chart.js/auto";
-import { SongItem, RankList } from "../../components";
+import { SongItem, RankList, Loading } from "../../components";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 
@@ -129,103 +129,111 @@ const ZingChart = () => {
   // console.log(chartData);
 
   return (
-    <div className="">
-      <div className="flex flex-col">
-        <div className="relative">
-          <img
-            src={bgChart}
-            alt="bgChart"
-            className="w-full h-[500px] object-cover grayscale"
-          />
-          <div className="absolute top-0 left-0 right-0 bottom-0 bg-[rgba(206,217,217,0.8)]"></div>
-          <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-[#ced9d9] to-transparent"></div>
-          <div className="absolute top-0 left-0 right-0 bottom-1/2 flex items-center px-[60px] ">
-            <h3 className="font-bold text-[40px] text-main-500">#zingchart</h3>
-          </div>
-          <div className="absolute top-1/3 left-0 right-0 bottom-0 px-[60px]">
-            {data && <Line data={data} ref={chartRef} options={options} />}
-            <div
-              className="tooltip"
-              style={{
-                top: tooltipState.top,
-                left: tooltipState.left,
-                opacity: tooltipState.opacity,
-                position: "absolute",
-              }}
-            >
-              <SongItem
-                thumbnail={
-                  chartData?.RTChart?.items?.find(
-                    (i) => i.encodeId === selected
-                  )?.thumbnail
-                }
-                title={
-                  chartData?.RTChart?.items?.find(
-                    (i) => i.encodeId === selected
-                  )?.title
-                }
-                artists={
-                  chartData?.RTChart?.items?.find(
-                    (i) => i.encodeId === selected
-                  )?.artistsNames
-                }
-                sid={
-                  chartData?.RTChart?.items?.find(
-                    (i) => i.encodeId === selected
-                  )?.encodeId
-                }
-                style="bg-white"
+    <>
+      {chartData ? (
+        <div className="">
+          <div className="flex flex-col">
+            <div className="relative">
+              <img
+                src={bgChart}
+                alt="bgChart"
+                className="w-full h-[500px] object-cover grayscale"
               />
+              <div className="absolute top-0 left-0 right-0 bottom-0 bg-[rgba(206,217,217,0.8)]"></div>
+              <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-[#ced9d9] to-transparent"></div>
+              <div className="absolute top-0 left-0 right-0 bottom-1/2 flex items-center px-[60px] ">
+                <h3 className="font-bold text-[40px] text-main-500">
+                  #zingchart
+                </h3>
+              </div>
+              <div className="absolute top-1/3 left-0 right-0 bottom-0 px-[60px]">
+                {data && <Line data={data} ref={chartRef} options={options} />}
+                <div
+                  className="tooltip"
+                  style={{
+                    top: tooltipState.top,
+                    left: tooltipState.left,
+                    opacity: tooltipState.opacity,
+                    position: "absolute",
+                  }}
+                >
+                  <SongItem
+                    thumbnail={
+                      chartData?.RTChart?.items?.find(
+                        (i) => i.encodeId === selected
+                      )?.thumbnail
+                    }
+                    title={
+                      chartData?.RTChart?.items?.find(
+                        (i) => i.encodeId === selected
+                      )?.title
+                    }
+                    artists={
+                      chartData?.RTChart?.items?.find(
+                        (i) => i.encodeId === selected
+                      )?.artistsNames
+                    }
+                    sid={
+                      chartData?.RTChart?.items?.find(
+                        (i) => i.encodeId === selected
+                      )?.encodeId
+                    }
+                    style="bg-white"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="px-[60px] mt-12">
+            <RankList data={chartData?.RTChart?.items} number={10} />
+          </div>
+
+          <div className="relative">
+            <img
+              src={bgChart}
+              alt="bgChart"
+              className="w-full h-[650px] object-cover grayscale"
+            />
+            <div className="absolute top-0 left-0 right-0 bottom-0 bg-[rgba(206,217,217,0.8)]"></div>
+            <div className="absolute top-0 left-0 right-0 bottom-1/2 flex flex-col gap-4 mt-8 px-[60px] ">
+              <h3 className="font-bold text-[40px] text-main-500">
+                Bảng Xếp Hạng Tuần
+              </h3>
+              <div className="flex gap-4 h-fit">
+                {chartData?.weekChart &&
+                  Object.entries(chartData?.weekChart)?.map((item, index) => (
+                    <div
+                      className="flex-1 bg-gray-200 rounded-md px-[10px] py-5"
+                      key={index}
+                    >
+                      <h3 className="text-[24px] text-main-500 font-bold">
+                        {item[0] === "vn"
+                          ? "Việt Nam"
+                          : item[0] === "us"
+                          ? "US-UK"
+                          : item[0] === "korea"
+                          ? "K-Pop"
+                          : ""}
+                      </h3>
+                      <div className="mt-4 h-fit">
+                        <RankList
+                          data={item[1]?.items}
+                          isHideAlbum={true}
+                          number={5}
+                          link={item[1].link}
+                        />
+                      </div>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="px-[60px] mt-12">
-        <RankList data={chartData?.RTChart?.items} number={10} />
-      </div>
-
-      <div className="relative">
-        <img
-          src={bgChart}
-          alt="bgChart"
-          className="w-full h-[650px] object-cover grayscale"
-        />
-        <div className="absolute top-0 left-0 right-0 bottom-0 bg-[rgba(206,217,217,0.8)]"></div>
-        <div className="absolute top-0 left-0 right-0 bottom-1/2 flex flex-col gap-4 mt-8 px-[60px] ">
-          <h3 className="font-bold text-[40px] text-main-500">
-            Bảng Xếp Hạng Tuần
-          </h3>
-          <div className="flex gap-4 h-fit">
-            {chartData?.weekChart &&
-              Object.entries(chartData?.weekChart)?.map((item, index) => (
-                <div
-                  className="flex-1 bg-gray-200 rounded-md px-[10px] py-5"
-                  key={index}
-                >
-                  <h3 className="text-[24px] text-main-500 font-bold">
-                    {item[0] === "vn"
-                      ? "Việt Nam"
-                      : item[0] === "us"
-                      ? "US-UK"
-                      : item[0] === "korea"
-                      ? "K-Pop"
-                      : ""}
-                  </h3>
-                  <div className="mt-4 h-fit">
-                    <RankList
-                      data={item[1]?.items}
-                      isHideAlbum={true}
-                      number={5}
-                      link={item[1].link}
-                    />
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-      </div>
-    </div>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };
 

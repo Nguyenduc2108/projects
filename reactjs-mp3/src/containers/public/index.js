@@ -10,3 +10,5 @@ export { default as SearchSongs } from "./SearchSongs";
 export { default as SearchAll } from "./SearchAll";
 export { default as Singer } from "./Singer";
 export { default as SearchPlaylist } from "./SearchPlaylist";
+export { default as NewChart } from "./NewChart";
+export { default as Register } from "./Register";

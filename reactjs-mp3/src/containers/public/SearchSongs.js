@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Lists, List } from "../../components";
+import { Lists, List, Loading } from "../../components";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../store/actions";
 

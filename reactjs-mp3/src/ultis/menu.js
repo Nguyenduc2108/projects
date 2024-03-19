@@ -6,7 +6,7 @@ const { MdOutlineLibraryMusic, TbChartArcs, BiSolidChart, MdOutlineFeed } =
 export const sidebarMenu = [
   {
     path: "mymusic",
-    text: "Cá nhân",
+    text: "Thư viện",
     icons: <MdOutlineLibraryMusic size={24} />,
   },
   {
@@ -21,8 +21,8 @@ export const sidebarMenu = [
     icons: <BiSolidChart size={24} />,
   },
   {
-    path: "follow",
-    text: "Theo dõi",
+    path: "moi-phat-hanh",
+    text: "BXH nhạc mới",
     icons: <MdOutlineFeed size={24} />,
   },
 ];
@@ -40,9 +40,9 @@ export const searchMenu = [
     path: "playlist",
     text: "PLAYLIST/ALBUM",
   },
-  // {
-  //   path: "follow",
-  //   text: "Theo dõi",
-  //   icons: <MdOutlineFeed size={24} />,
-  // },
+  {
+    // path: "moi-phat-hanh",
+    // text: "MỚI PHÁT HÀNH",
+    // icons: <MdOutlineFeed size={24} />,
+  },
 ];
