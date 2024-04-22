@@ -12,3 +12,4 @@ export { default as Singer } from "./Singer";
 export { default as SearchPlaylist } from "./SearchPlaylist";
 export { default as NewChart } from "./NewChart";
 export { default as Register } from "./Register";
+export { default as Loginsuccess } from "./Loginsuccess";
