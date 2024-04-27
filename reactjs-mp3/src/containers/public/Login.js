@@ -1,8 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import facebook from "../../assets/images/facebook.png";
 import google from "../../assets/images/google.png";
 
+const initFormValue = {
+    email: "",
+    password: "",
+};
+
+const isEmptyValue = (value) => {
+    return !value || value.trim().length === 0;
+};
+
+const isValidateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
+
 const Login = () => {
+    const [formValue, setFormValue] = useState(initFormValue);
+    const [formError, setFormError] = useState({});
+
+    const validateForm = () => {
+        const error = {};
+
+        if (isEmptyValue(formValue.email)) {
+            error["email"] = "Email không được để trống";
+        } else if (!isValidateEmail(formValue.email)) {
+            error["email"] = "Email không hợp lệ";
+        }
+
+        if (isEmptyValue(formValue.password)) {
+            error["password"] = "Mật khẩu không được để trống";
+        }
+
+        setFormError(error);
+
+        return Object.keys(error).length === 0;
+    };
+
+    const handleChange = (e) => {
+        const { value, name } = e.target;
+        setFormValue({
+            ...formValue,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (validateForm()) {
+            console.log(formValue);
+        } else {
+            console.log("Form is invalid");
+        }
+    };
+
     const handleLogin = (e) => {
         e.preventDefault();
         window.open("http://localhost:5000/api/auth/google", "_self");
@@ -18,26 +70,47 @@ const Login = () => {
             <h1 className="text-[40px] font-semibold">Đăng nhập</h1>
             <div>
                 <form
+                    onSubmit={handleSubmit}
                     action=""
                     className="w-[400px] max-w-[100%] bg-white rounded-md p-4"
                 >
                     <h2 className="text-main-500 text-[24px] text-center mb-4">
                         Đăng nhập
                     </h2>
-                    <input
-                        type="text"
-                        placeholder="Email/Số điện thoại/Tên đăng nhập"
-                        className="w-full p-3 border border-gray-500 mb-6"
-                    />
-                    <input
-                        type="password"
-                        placeholder="Mật khẩu"
-                        className="w-full p-3 border border-gray-500 mb-8"
-                    />
+                    <div>
+                        <input
+                            className="w-full p-3 border border-gray-500"
+                            type="text"
+                            name="email"
+                            value={formValue.email}
+                            placeholder="Email"
+                            onChange={handleChange}
+                        />
+                        {formError.email && (
+                            <p className="text-red-500 text-sm">
+                                {formError.email}
+                            </p>
+                        )}
+                    </div>
+                    <div>
+                        <input
+                            className="w-full p-3 border border-gray-500 mt-8"
+                            type="password"
+                            name="password"
+                            value={formValue.password}
+                            placeholder="Mật khẩu"
+                            onChange={handleChange}
+                        />
+                        {formError.password && (
+                            <p className="text-red-500 text-sm">
+                                {formError.password}
+                            </p>
+                        )}
+                    </div>
 
                     <button
-                        type="button"
-                        className="w-full p-3 mb-4 bg-main-500 hover:opacity-90 text-white rounded-sm"
+                        type="submit"
+                        className="w-full p-3 mb-4 mt-8 bg-main-500 hover:opacity-90 text-white rounded-sm"
                     >
                         ĐĂNG NHẬP
                     </button>

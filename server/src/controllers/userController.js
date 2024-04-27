@@ -1,15 +1,15 @@
-const authService = require("../services/authService");
+const userService = require("../services/userService");
 
-const loginSuccess = async (req, res) => {
-    const { id, tokenLogin } = req?.body;
+const getOne = async (req, res) => {
+    const { currentUser } = req;
     try {
-        if (!id || !tokenLogin)
+        if (!currentUser?.id)
             res.status(400).json({
                 err: 1,
                 msg: "Missing inputs",
             });
 
-        let response = await authService.loginSuccessService(id, tokenLogin);
+        let response = await userService.getOneService(currentUser?.id);
         res.status(200).json(response);
     } catch (error) {
         res.status(500).json({
@@ -20,5 +20,5 @@ const loginSuccess = async (req, res) => {
 };
 
 module.exports = {
-    loginSuccess,
+    getOne,
 };
