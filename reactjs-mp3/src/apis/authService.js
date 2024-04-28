@@ -14,3 +14,15 @@ export const apiLoginSuccess = (id, tokenLogin) =>
             reject(error);
         }
     });
+
+export const register = async (data) => {
+    try {
+        const response = await axios.post(
+            "http://localhost:5000/api/register",
+            data
+        );
+        return response;
+    } catch (error) {
+        console.error(error);
+    }
+};

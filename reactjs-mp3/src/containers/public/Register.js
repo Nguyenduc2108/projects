@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import facebook from "../../assets/images/facebook.png";
 import google from "../../assets/images/google.png";
+import { toast } from "react-toastify";
+import { register } from "../../apis/authService";
 
 const initFormValue = {
     email: "",
@@ -52,12 +54,15 @@ const Register = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validateForm()) {
+        const response = await register(formValue);
+
+        if (validateForm() || response.data.success) {
             console.log(formValue);
             // Switch back to /login
+            toast.success("Đăng ký thành công");
             window.location.href = "/login";
         } else {
             console.log("Form is invalid");

@@ -72,14 +72,24 @@ const registerService = async (email, password) => {
         });
 
         user = await user.save();
-        email.status(200).json(user);
+        resolve(user);
     } catch (error) {
-        email.status(400).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 
     return user;
 };
 
+const register = async (data) => {
+    // Tạo tài khoản mới trong cơ sở dữ liệu ở đây
+    // Giả sử bạn có một model User
+    const user = new db.User(data);
+    await user.save();
+
+    return { success: true };
+};
+
 module.exports = {
     registerService,
+    register,
 };

@@ -2,6 +2,7 @@ const router = require("express").Router();
 const passport = require("passport");
 require("dotenv").config();
 const authController = require("../controllers/authController");
+const authService = require("../services/authService");
 
 router.get(
     "/google",
@@ -50,5 +51,10 @@ router.get(
 );
 
 router.post("/login-success", authController.loginSuccess);
+
+router.post("/register", async (req, res) => {
+    const result = await authService.register(req.body);
+    res.send(result);
+});
 
 module.exports = router;
