@@ -60,11 +60,6 @@ const Login = () => {
         window.open("http://localhost:5000/api/auth/google", "_self");
     };
 
-    const handleLoginFacebook = (e) => {
-        e.preventDefault();
-        window.open("http://localhost:5000/api/auth/facebook", "_self");
-    };
-
     return (
         <div className="flex flex-col gap-8 items-center justify-center mt-[90px]">
             <h1 className="text-[40px] font-semibold">Đăng nhập</h1>
@@ -126,10 +121,7 @@ const Login = () => {
                     </div>
 
                     <div className="flex justify-between gap-2 mt-4 ">
-                        <button
-                            className="flex justify-center items-center bg-[#E6E6E6] flex-1 p-2 rounded-sm"
-                            onClick={handleLoginFacebook}
-                        >
+                        <button className="flex justify-center items-center bg-[#E6E6E6] flex-1 p-2 rounded-sm">
                             <img
                                 src={facebook}
                                 alt="facebook"
